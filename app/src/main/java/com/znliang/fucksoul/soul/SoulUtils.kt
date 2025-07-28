@@ -1,6 +1,7 @@
-package com.znliang.fucksoul
+package com.znliang.fucksoul.soul
 
 import android.util.Log
+import com.znliang.fucksoul.TAG
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -11,8 +12,8 @@ fun hookSoul(lpparam: XC_LoadPackage.LoadPackageParam) {
     Log.d(TAG, "Loaded package: ${lpparam.packageName} in process ${lpparam.processName}")
 
     hookAndDismissOnResume(lpparam)
-    hookDialogs(lpparam)
     hookSoulDialogShow(lpparam)
+    hookSplashPage(lpparam)
 }
 
 private fun hookAndDismissOnResume(lpparam: XC_LoadPackage.LoadPackageParam) {
@@ -56,4 +57,26 @@ private fun hookSoulDialogShow(lpparam: XC_LoadPackage.LoadPackageParam) {
     } catch (e: Throwable) {
         Log.d(TAG, "Failed to hook SoulDialog.show()", e)
     }
+}
+
+private fun hookSplashPage(lpparam: XC_LoadPackage.LoadPackageParam) {
+    XposedHelpers.findAndHookMethod(
+        "cn.soulapp.android.client.component.middle.platform.push.SoulLaunchActivity",
+        lpparam.classLoader,
+        "onCreate",
+        android.os.Bundle::class.java,
+        object : XC_MethodHook() {
+            override fun afterHookedMethod(param: MethodHookParam) {
+                val activity = param.thisObject
+                val className = activity.javaClass.name
+                Log.d(TAG, "Auto finish splash: $className")
+                try {
+                    XposedHelpers.callMethod(activity, "finish")
+                    Log.d(TAG, "Splash finished: $className")
+                } catch (e: Throwable) {
+                    Log.d(TAG, "Failed to finish splash activity: $className", e)
+                }
+            }
+        }
+    )
 }

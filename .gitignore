@@ -1,6 +1,7 @@
 # Kotlin & Java
 *.iml
 *.class
+.idea
 
 # Android Studio
 .gradle
