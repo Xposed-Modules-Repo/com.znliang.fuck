@@ -1,6 +1,7 @@
 package com.znliang.fucksoul
 
 import com.znliang.fucksoul.soul.hookSoul
+import com.znliang.fucksoul.utils.hookActivities
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
