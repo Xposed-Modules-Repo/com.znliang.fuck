@@ -5,7 +5,7 @@ import com.znliang.fucksoul.TAG
 import de.robv.android.xposed.XposedHelpers
 
 
-private fun printAllMethods(className: String, classLoader: ClassLoader) {
+fun printAllMethods(className: String, classLoader: ClassLoader) {
     try {
         val clazz = XposedHelpers.findClass(className, classLoader)
         val methods = clazz.declaredMethods
