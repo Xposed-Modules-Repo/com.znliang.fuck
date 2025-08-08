@@ -1,8 +1,8 @@
-package com.znliang.fucksoul.soul
+package com.znliang.fuck.soul
 
 import android.util.Log
-import com.znliang.fucksoul.TAG
-import com.znliang.fucksoul.utils.hookDialogs
+import com.znliang.fuck.TAG
+import com.znliang.fuck.utils.hookDialogs
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:label="Fucksoul"
+        android:label="FuckApp"
         android:theme="@android:style/Theme.NoDisplay"
         android:icon="@mipmap/ic_launcher">
 

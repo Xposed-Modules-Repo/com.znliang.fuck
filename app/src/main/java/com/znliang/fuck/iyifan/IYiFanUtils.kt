@@ -1,8 +1,8 @@
-package com.znliang.fucksoul.iyifan
+package com.znliang.fuck.iyifan
 
 import android.util.Log
-import com.znliang.fucksoul.TAG
-import com.znliang.fucksoul.utils.printAllMethods
+import com.znliang.fuck.TAG
+import com.znliang.fuck.utils.printAllMethods
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedHelpers
@@ -24,7 +24,6 @@ fun hookIYiFan(lpparam: XC_LoadPackage.LoadPackageParam) {
  */
 private fun hookVideoItemBean(classLoader: ClassLoader) {
     val videoItemClass = "com.ppde.ppcd.video.bean.VideoItemBean"
-    printAllMethods(videoItemClass, classLoader)
 
     XposedHelpers.findAndHookMethod(
         videoItemClass,
@@ -59,7 +58,6 @@ private fun hookVideoItemBean(classLoader: ClassLoader) {
  */
 private fun hookUserInfoBean(classLoader: ClassLoader) {
     val userInfoClass = "com.ppde.library.bean.UserInfoBean"
-    printAllMethods(userInfoClass, classLoader)
 
     XposedHelpers.findAndHookMethod(
         userInfoClass,

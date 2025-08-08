@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.znliang.fucksoul"
+    namespace = "com.znliang.fuck"
     compileSdk = 34
 
     defaultConfig {

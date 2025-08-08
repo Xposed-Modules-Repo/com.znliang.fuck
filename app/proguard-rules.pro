@@ -19,6 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keep class com.znliang.fucksoul.** { *; }
+-keep class com.znliang.fuck.** { *; }
 -dontwarn kotlin.**
 -dontwarn org.jetbrains.**

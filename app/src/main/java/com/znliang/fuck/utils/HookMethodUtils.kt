@@ -1,7 +1,7 @@
-package com.znliang.fucksoul.utils
+package com.znliang.fuck.utils
 
 import android.util.Log
-import com.znliang.fucksoul.TAG
+import com.znliang.fuck.TAG
 import de.robv.android.xposed.XposedHelpers
 
 
