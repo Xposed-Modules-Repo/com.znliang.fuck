@@ -6,7 +6,7 @@ import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
-fun hookFragments(lpparam: XC_LoadPackage.LoadPackageParam) {
+fun hookFragments(lpparam: XC_LoadPackage.LoadPackageParam, block: (className: String, obj: Any) -> Unit) {
     XposedHelpers.findAndHookMethod(
         "androidx.fragment.app.Fragment",
         lpparam.classLoader,
@@ -16,6 +16,7 @@ fun hookFragments(lpparam: XC_LoadPackage.LoadPackageParam) {
                 val fragment = param.thisObject
                 val className = fragment.javaClass.name
                 Log.d(TAG, "Fragment onResume(): $className")
+                block(className, fragment)
             }
         }
     )
