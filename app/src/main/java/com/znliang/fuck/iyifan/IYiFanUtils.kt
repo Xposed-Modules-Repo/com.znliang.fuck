@@ -2,14 +2,14 @@ package com.znliang.fuck.iyifan
 
 import android.util.Log
 import com.znliang.fuck.TAG
-import com.znliang.fuck.utils.printAllMethods
+import com.znliang.fuck.utils.hookActivities
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XC_MethodReplacement
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 /**
- * Hook iYIFAN
+ * Hook IYiFan
  */
 fun hookIYiFan(lpparam: XC_LoadPackage.LoadPackageParam) {
     if (lpparam.packageName != "com.cqcsy.ifvod") return
@@ -17,6 +17,7 @@ fun hookIYiFan(lpparam: XC_LoadPackage.LoadPackageParam) {
     val classLoader = lpparam.classLoader
     hookVideoItemBean(classLoader)
     hookUserInfoBean(classLoader)
+    hookActivities(lpparam)
 }
 
 /**
@@ -140,46 +141,3 @@ private fun hookUserInfoBean(classLoader: ClassLoader) {
         }
     )
 }
-
-
-    // --- 关键：hook解析响应的解析器com.base.library.net.parser.a ---
-//    val parserClass = "com.base.library.net.parser.a"
-//    XposedHelpers.findAndHookMethod(parserClass, classLoader, "a", Object::class.java, object : XC_MethodHook() {
-//        override fun afterHookedMethod(param: MethodHookParam) {
-//            val response = param.args[0]
-//            val parsedObj = param.result ?: return
-//            val clazz = parsedObj.javaClass
-//            try {
-//                // 反射修改字段
-//                val eDateField = clazz.getDeclaredField("eDate")
-//                eDateField.isAccessible = true
-//                eDateField.set(parsedObj, "2099-02-06T13:53:00Z")
-//
-//                val nickNameField = clazz.getDeclaredField("nickName")
-//                nickNameField.isAccessible = true
-//                nickNameField.set(parsedObj, "Hooked昵称")
-//
-//                val vipLevelField = clazz.getDeclaredField("vipLevel")
-//                vipLevelField.isAccessible = true
-//                vipLevelField.set(parsedObj, 10)
-//
-//                val giveVipField = clazz.getDeclaredField("isGiveVip")
-//                giveVipField.isAccessible = true
-//                giveVipField.set(parsedObj, true)
-//
-//                val bigVField = clazz.getDeclaredField("bigV")
-//                bigVField.isAccessible = true
-//                bigVField.set(parsedObj, true)
-//
-//                val enableField = clazz.getDeclaredField("isEnable")
-//                enableField.isAccessible = true
-//                enableField.set(parsedObj, true)
-//
-//                // 如果有其他字段，比如 fansCount、attentionCount 等
-//                // 也可以类似操作
-//            } catch (e: Exception) {
-//                Log.e(TAG, "修改UserInfoBean字段失败", e)
-//            }
-//        }
-//    })
-

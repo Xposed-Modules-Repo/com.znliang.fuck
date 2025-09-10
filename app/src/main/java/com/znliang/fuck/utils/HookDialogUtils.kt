@@ -15,12 +15,12 @@ fun hookDialogs(lpparam: XC_LoadPackage.LoadPackageParam) {
             override fun beforeHookedMethod(param: MethodHookParam) {
                 val dialog = param.thisObject
                 val className = dialog.javaClass.name
-                Log.d(TAG, "Dialog show(): $className")
+                Log.d("$TAG:Dialog", "Dialog show(): $className")
                 try {
                     XposedHelpers.callMethod(dialog, "dismiss")
-                    Log.d(TAG, "Dismissed Dialog: $className")
+                    Log.d("$TAG:Dialog", "Dismissed Dialog: $className")
                 } catch (e: Throwable) {
-                    Log.d(TAG, "Failed to dismiss Dialog: $className", e)
+                    Log.d("$TAG:Dialog", "Failed to dismiss Dialog: $className", e)
                 }
             }
         }
