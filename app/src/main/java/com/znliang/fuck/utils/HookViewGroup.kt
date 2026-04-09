@@ -8,32 +8,31 @@ import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
+private val containerClasses = arrayOf(
+    "android.view.ViewGroup",
+    "android.widget.FrameLayout",
+    "android.widget.LinearLayout",
+    "android.widget.RelativeLayout",
+    "android.widget.ScrollView",
+    "androidx.constraintlayout.widget.ConstraintLayout"
+)
+
+private val addViewSignatures = arrayOf(
+    arrayOf<Any?>(View::class.java),
+    arrayOf<Any?>(View::class.java, Int::class.javaPrimitiveType),
+    arrayOf<Any?>(View::class.java, ViewGroup.LayoutParams::class.java),
+    arrayOf<Any?>(View::class.java, Int::class.javaPrimitiveType, ViewGroup.LayoutParams::class.java)
+)
+
 fun hookAllCustomViews(
     lpparam: XC_LoadPackage.LoadPackageParam,
     block: ((className: String, view: View) -> Unit)? = null
 ) {
-    val containerClasses = listOf(
-        "android.view.ViewGroup",
-        "android.widget.FrameLayout",
-        "android.widget.LinearLayout",
-        "android.widget.RelativeLayout",
-        "android.widget.ScrollView",
-        "androidx.constraintlayout.widget.ConstraintLayout"
-    )
-
     for (clsName in containerClasses) {
         try {
             val cls = XposedHelpers.findClass(clsName, lpparam.classLoader)
 
-            // Hook 常用 addView 重载
-            val addViewMethods = listOf(
-                arrayOf(View::class.java),
-                arrayOf(View::class.java, Int::class.javaPrimitiveType),
-                arrayOf(View::class.java, ViewGroup.LayoutParams::class.java),
-                arrayOf(View::class.java, Int::class.javaPrimitiveType, ViewGroup.LayoutParams::class.java)
-            )
-
-            for (params in addViewMethods) {
+            for (params in addViewSignatures) {
                 try {
                     XposedHelpers.findAndHookMethod(
                         cls,

@@ -3,7 +3,6 @@ package com.znliang.fuck.soul
 import android.util.Log
 import android.view.View
 import com.znliang.fuck.TAG
-import com.znliang.fuck.utils.hookActivities
 import com.znliang.fuck.utils.hookAllCustomViews
 import com.znliang.fuck.utils.hookDialogs
 import com.znliang.fuck.utils.hookFragments
@@ -12,7 +11,7 @@ import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 
-private val adViewKeywords = listOf(
+private val adViewKeywords = arrayOf(
     "ad.views",
     "soulad.ad.views",
     "SplashAdView",
@@ -24,10 +23,7 @@ private val adViewKeywords = listOf(
 )
 
 fun hookSoul(lpparam: XC_LoadPackage.LoadPackageParam) {
-    if (lpparam.packageName != "cn.soulapp.android") return
-
     Log.d("$TAG:Soul", "Loaded package: ${lpparam.packageName} in process ${lpparam.processName}")
-    hookActivities(lpparam)
     hookDialogs(lpparam)
     hookSoulDialogShow(lpparam)
     hookFragments(lpparam) { className, obj ->

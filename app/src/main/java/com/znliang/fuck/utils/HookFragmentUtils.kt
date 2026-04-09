@@ -6,15 +6,15 @@ import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
+private val fragmentClasses = arrayOf(
+    "androidx.fragment.app.Fragment",
+    "android.app.Fragment"
+)
+
 fun hookFragments(
     lpparam: XC_LoadPackage.LoadPackageParam,
     block: ((className: String, obj: Any) -> Unit)? = null
 ) {
-    val fragmentClasses = listOf(
-        "androidx.fragment.app.Fragment",
-        "android.app.Fragment"
-    )
-
     fragmentClasses.forEach { className ->
         try {
             val clazz = XposedHelpers.findClassIfExists(className, lpparam.classLoader)
