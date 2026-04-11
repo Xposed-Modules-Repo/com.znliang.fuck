@@ -3,23 +3,20 @@ package com.znliang.fuck.soul
 import android.util.Log
 import android.view.View
 import com.znliang.fuck.TAG
+import com.znliang.fuck.utils.adViewKeywords
 import com.znliang.fuck.utils.hookAllCustomViews
 import com.znliang.fuck.utils.hookDialogs
 import com.znliang.fuck.utils.hookFragments
+import com.znliang.fuck.utils.registerDialogInterceptor
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 
-private val adViewKeywords = arrayOf(
-    "ad.views",
-    "soulad.ad.views",
-    "SplashAdView",
-    "ExpressView",
-    "NativeExpressView",
-    "LoveView",
-    "FunctionCardView",
-    "BridgeWebViewX5",
+private val soulAdViewKeywords = arrayOf(
+    "ad.views", "soulad.ad.views",
+    "SplashAdView", "ExpressView", "NativeExpressView",
+    "LoveView", "FunctionCardView", "BridgeWebViewX5",
 )
 
 fun hookSoul(lpparam: XC_LoadPackage.LoadPackageParam) {
@@ -34,11 +31,20 @@ fun hookSoul(lpparam: XC_LoadPackage.LoadPackageParam) {
         }
     }
     hookAllCustomViews(lpparam) { className, child ->
-        // 匹配广告相关类名
-        if (adViewKeywords.any { className.contains(it, ignoreCase = true) }) {
+        if (soulAdViewKeywords.any { className.contains(it, ignoreCase = true) }) {
             child.visibility = View.GONE
             Log.d("$TAG:Soul", "Removed Ad View: $className")
         }
+    }
+
+    // 注册 Soul 专属弹窗拦截
+    registerDialogInterceptor { className, _ ->
+        val soulAdDialogs = arrayOf(
+            "LimitGiftDialog", "GiftDialog", "LimitDialog",
+            "DailyLimitDialog", "ChatLimitDialog",
+            "SoulDialog",
+        )
+        soulAdDialogs.any { className.contains(it, ignoreCase = true) }
     }
 }
 

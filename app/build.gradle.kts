@@ -13,14 +13,27 @@ android {
         applicationId = "com.znliang.fucksoul"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("/Users/spinoza/Documents/key/fuck.jks")
+            storePassword = "xiebin"
+            keyAlias = "fuck"
+            keyPassword = "xiebin"
+        }
     }
 
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("release")
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

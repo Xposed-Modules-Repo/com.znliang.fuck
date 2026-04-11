@@ -39,3 +39,4 @@ out/
 # Keystore
 *.jks
 *.keystore
+/.kotlin/sessions/kotlin-compiler-8241332145858724740.salive
